@@ -2,15 +2,15 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from typing import Generator
-from dotenv import load_dotenv
 from sqlalchemy.orm import Session
-import os
+from utils.env_config import Settings
+# import os
+# from dotenv import load_dotenv
 
+# load_dotenv()
 
-load_dotenv()
-
-DB_URL = f'postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}'
-
+settings = Settings()
+DB_URL = f'postgresql://{settings.DB_USER}:{settings.DB_PASSWORD}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}'
 # print(DB_URL)
 
 engine = create_engine(DB_URL, echo=True)
