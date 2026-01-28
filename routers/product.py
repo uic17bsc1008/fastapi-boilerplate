@@ -20,5 +20,5 @@ async def create_product(request:schemaProduct, db: Annotated[Session, Depends(g
 async def get_products(db: Annotated[Session, Depends(get_db)]):
     all_products = db.query(Product).all()
     if not all_products:
-        return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No products found!")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No products found!")
     return all_products

@@ -22,7 +22,7 @@ async def create_user(request:schemaUser, db: Annotated[Session, Depends(get_db)
 async def get_user(id: int, db: Annotated[Session, Depends(get_db)]):
     user = db.query(User).filter(User.id == id).first()
     if not user:
-        return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist!")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist!")
     return user
 
 
@@ -30,5 +30,5 @@ async def get_user(id: int, db: Annotated[Session, Depends(get_db)]):
 async def get_users(db: Annotated[Session, Depends(get_db)]):
     all_users = db.query(User).all()
     if not all_users:
-        return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No users found!")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No users found!")
     return all_users
