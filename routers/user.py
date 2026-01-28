@@ -5,11 +5,12 @@ from models.user import User
 from sqlalchemy.orm import Session
 from database import get_db
 from utils.hashing import Hash
+from typing import Annotated
 
 router =  APIRouter(prefix='/users', tags=['Users'])
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
-async def create_user(request:schemaUser, db:Session = Depends(get_db)):
+async def create_user(request:schemaUser, db: Annotated[Session, Depends(get_db)]):
     new_user = User(name=request.name, email=request.email, password=Hash.make(request.password))
     db.add(new_user)
     db.commit()
@@ -18,7 +19,7 @@ async def create_user(request:schemaUser, db:Session = Depends(get_db)):
 
 
 @router.get('/{id}', status_code=status.HTTP_200_OK)
-async def get_user(id: int, db:Session = Depends(get_db)):
+async def get_user(id: int, db: Annotated[Session, Depends(get_db)]):
     user = db.query(User).filter(User.id == id).first()
     if not user:
         return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist!")
@@ -26,7 +27,7 @@ async def get_user(id: int, db:Session = Depends(get_db)):
 
 
 @router.get('/', status_code=status.HTTP_200_OK)
-async def get_users(db:Session = Depends(get_db)):
+async def get_users(db: Annotated[Session, Depends(get_db)]):
     all_users = db.query(User).all()
     if not all_users:
         return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No users found!")
