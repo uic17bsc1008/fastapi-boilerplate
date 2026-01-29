@@ -2,14 +2,20 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from functools import lru_cache
 
 class Settings(BaseSettings):
-    DB_USER: str
-    DB_PASSWORD: str
-    DB_HOST: str
-    DB_PORT: int
-    DB_NAME: str
+    
+    db_user: str
+    db_password: str
+    db_host: str
+    db_port: int
+    db_name: str
+
+    secret_key: str
+    algorithm: str
+    access_token_expire_minutes: int
+
 
     model_config = SettingsConfigDict(env_file=".env")
 
 @lru_cache
-def get_settings():
+def getSettings():
     return Settings() # type: ignore

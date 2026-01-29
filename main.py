@@ -5,11 +5,13 @@ from models.user import User
 from models.product import Product
 from routers.user import router as user_router
 from routers.product import router as product_router
+from routers.authentication import router as auth_router
 from fastapi.middleware.cors import CORSMiddleware
 
 
 
 app = FastAPI(title="Fastapi boilerplate for open-source")
+app.include_router(auth_router)
 app.include_router(user_router)
 app.include_router(product_router)
 
