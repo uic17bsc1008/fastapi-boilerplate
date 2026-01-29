@@ -5,6 +5,20 @@ git clone https://github.com/uic17bsc1008/fastapi-boilerplate.git
 cd fastapi-boilerplate
 ```
 
+###### Go to `database.py` just change your `DB_URL` connection string.
+
+- for PostgreSQL
+
+```python
+DB_URL = f'postgresql://{settings.db_user}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_name}'
+```
+
+- for MySQL
+
+```python
+DB_URL = f'mysql+mysqldb://{settings.db_user}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_name}'
+```
+
 # 1 - Create `.env` in your project directory.
 
 ```
