@@ -7,10 +7,21 @@ from routers.user import router as user_router
 from routers.product import router as product_router
 from routers.authentication import router as auth_router
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 
 
 
-app = FastAPI(title="Fastapi boilerplate for open-source")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # on startup
+    await create_db_tables()
+    yield
+    # on shutdown
+
+
+app = FastAPI(title="Fastapi boilerplate for open-source", lifespan=lifespan)
+
+
 app.include_router(auth_router)
 app.include_router(user_router)
 app.include_router(product_router)
@@ -26,9 +37,7 @@ app.add_middleware(
 )
 
 
-
-@app.on_event('startup')
-async def on_startup():
+async def create_db_tables():
     User.metadata.create_all(engine)
     Product.metadata.create_all(engine)
 
