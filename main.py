@@ -14,7 +14,7 @@ from contextlib import asynccontextmanager
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # on startup
-    await create_db_tables()
+    create_db_tables()
     yield
     # on shutdown
 
@@ -37,7 +37,7 @@ app.add_middleware(
 )
 
 
-async def create_db_tables():
+def create_db_tables():
     User.metadata.create_all(engine)
     Product.metadata.create_all(engine)
 
