@@ -8,10 +8,8 @@ from sqlalchemy.orm import Session
 from models.user import User
 from utils.hashing import Hash
 from utils.jwt_auth import create_access_token
-from utils.env_config import getSettings
+from utils.env import getSettings
 from fastapi.security import OAuth2PasswordRequestForm
-
-
 
 
 settings = getSettings()
@@ -25,7 +23,7 @@ async def user_login(request: Annotated[OAuth2PasswordRequestForm, Depends()], d
     if not user or not Hash.check(request.password, user.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password",
+            detail="Invalid email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
     

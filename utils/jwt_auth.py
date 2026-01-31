@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status, Depends
 from datetime import datetime, timedelta, timezone
 import jwt
-from utils.env_config import getSettings
+from utils.env import getSettings
 from typing import Union, Annotated
 from jwt.exceptions import InvalidTokenError
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
