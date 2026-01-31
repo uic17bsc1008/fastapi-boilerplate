@@ -38,7 +38,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 python3 -m venv .venv
 ```
 
-- Active your `virtualenv`
+- Activate your `virtualenv`
 
 ```bash
 source .venv/bin/activate
